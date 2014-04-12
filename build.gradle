@@ -1,0 +1,13 @@
+task getVersion << {
+    new ByteArrayOutputStream().withStream { os ->
+        def result = exec {
+            executable = './getVersion.py'
+            standardOutput = os
+        }
+        project.version = os.toString()
+    }
+}
+
+task test(dependsOn: [getVersion]) << {
+    println "Version: $version"
+}
