@@ -36,7 +36,7 @@ to lead to misery.
 
 It turns out that in practice, it is best to assume that [builds are not reproducible](http://blog.fortified-bikesheds.com/2011/12/how-important-are-reproducible-builds.html). Instead, pretend every single build is your release build, and then simply make a determination by examining and testing the binaries whether you actually wish to release or deploy that build.
 
-In this context, there is no room for maven SNAPSHOT versioning, or the common "pre-tagging" of builds. Instead, it is important that any build made at any time can be potentially releasable.
+In this context, there is no room for maven SNAPSHOT versioning, or the common "pre-tagging" of builds. Instead, it is important that any build made at any time is releasable.
 
 ## Tagging model
 
@@ -49,7 +49,7 @@ For the purposes of this script, tags are assumped to be of the form:
 
 For example: v1.2GA, v0.5.1GA are all good tags.
 
-Once a tag is applied, it sticks and is not ever expected to be moved. Tags should document what has happened, as ooposed to expressing intent. That's what branches are for.
+Once a tag is applied, it sticks and is not ever expected to be moved. Tags should document what has happened, as opposed to expressing intent. That's what branches are for.
 
 ## Branching Model
 
@@ -63,7 +63,7 @@ The latter model is usually preferred, as it generally requires less disruption 
 The two models are expressed in the naming convention as follows:
 
 * A branch for a specific version is simply named for that version. For example: 0.5.1, 1.8 ...
-* A branch for a series of versions is expressed by appending a ".x" or a ".next" to the branch name. For example: 1.next is used for 1.1, 1.2, 1.3 etc..., but not for 1.2, and also not for 1.1.2 or such.
+* A branch for a series of versions is expressed by appending a ".x" or a ".next" to the branch name. For example: 1.next is used for 1.1, 1.2, 1.3 etc..., but not for 2.2, and also not for 1.1.2 or such.
 
 ## How is the Next Version Determined?
 

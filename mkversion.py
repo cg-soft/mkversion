@@ -155,6 +155,8 @@ for tag in tags:
          versions.append(v)
 
 # If our branch is not a ".next" branch, and there isn't a tag there, we're done.
+# Arguably, once a tag is placed on a branch without ".next", a build there should be
+# an error, since the tag effectively terminates any development on that branch.
 if my_branch not in is_dev_branch and my_branch not in is_ga_tag:
     print display(my_branch)
     sys.exit(0)
