@@ -1,7 +1,10 @@
+// This is a sample build script to show how one can
+// integrate this suite into gradle
+
 task getVersion << {
     new ByteArrayOutputStream().withStream { os ->
         def result = exec {
-            executable = './getVersion.py'
+            executable = './mkversion.py'
             standardOutput = os
         }
         project.version = os.toString()
