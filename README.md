@@ -6,7 +6,7 @@ usually by editing a properties file, or some build script.
 Some projects require carefully coordinated editing of multiple
 locations, and at the right time in the release process.
 
-This little python script is an example on how one can avoid
+This gradle code is an example on how one can avoid
 doing this, and instead derive the project version from the git
 branches and tags in use.
 
@@ -63,17 +63,40 @@ The latter model is usually preferred, as it generally requires less disruption 
 The two models are expressed in the naming convention as follows:
 
 * A branch for a specific version is simply named for that version. For example: 0.5.1, 1.8 ...
-* A branch for a series of versions is expressed by appending a ".x" or a ".next" to the branch name. For example: 1.next is used for 1.1, 1.2, 1.3 etc..., but not for 2.2, and also not for 1.1.2 or such.
+* A branch for a series of versions is expressed by appending ".next" to the branch name. For example: 1.next is used for 1.1, 1.2, 1.3 etc..., but not for 2.2, and also not for 1.1.2 or such.
+
+The gradle script here only deals with the latter model. It is easy to add code to deal with the former model.
+
+## Example
+
+        master (latest and greatest) ____________________________________
+                                      \                         \
+        patch                          \_______________1.0.next  \____1.1.next ...
+                                         \            \            \
+        hotfix                            \_1.0.0.next \_1.0.1.next \_1.1.0.next ...
+                                            |       |           |           |
+        tagged releases                   v1.0GA v1.0.0.1GA  v1.0.1GA     v1.1GA
+ 
+In this example, a build on a branch results in the following versions:
+
+        master     ->  1.2     (because 1.1 is taken by 1.1.next)
+        1.0.next   ->  1.0.2   (because 1.0.1 is taken by 1.0.1.next)
+        1.0.0.next ->  1.0.0.2 (because 1.0 and 1.0.0.1 are already tagged)
+        1.1.next   ->  1.1.1   (because 1.1 is taken by 1.1.0.next)
+        1.1.0.next ->  1.1.0.1 (because 1.1 is already tagged)
+ 
+Note that bumping the major version requires changing the constant `MASTER_VERSION` below. Altenatively, one can drop the use of master altogether and use 1.next, 2.next instead.
 
 ## How is the Next Version Determined?
 
 Given the current branch, and the set of branch and tag names known in git, we compute the project version as follows:
 
 * The version string will start with the explicit components mentioned in the current branch.
-* If the branch name has no ".x" or ".next" suffix, that's it.
-* If the branch does have a ".x" or a ".next" suffix, then the suffix will be replaced by a number one higher than the largest number used as the explicit portion of the version in any other branch or tag. If there is no other branch or tag with the same prefix as the current branch, then the suffix will be zero.
+* The ".next" suffix will be replaced by a number one higher than the largest number used as the explicit portion of the version in any other branch or tag. If there is no other branch or tag with the same prefix as the current branch, then the suffix will be zero.
 * The treatment of the "master" branch can be arbitrary. A constant in the script can be set to map the "master" branch to a string which conforms to the conventions above - or you can choose to not use master for any release builds.
 
-## Examples
+## Testing
 
-In this repository, there is a test.sh script which will feed in a list of tag and branch names and check the output against a golden output file.
+* Clone this repository
+* Ensure you have gradle version 2.1 or later installed
+* run "gradle testComputedVersion" from the top.
