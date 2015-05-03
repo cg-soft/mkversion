@@ -100,3 +100,35 @@ Given the current branch, and the set of branch and tag names known in git, we c
 * Clone this repository
 * Ensure you have gradle version 2.1 or later installed
 * run "gradle testComputedVersion" from the top.
+
+You should expect output like this:
+
+    $ gradle testComputedVersion
+    Configuration on demand is an incubating feature.
+    :buildSrc:clean UP-TO-DATE
+    :buildSrc:compileJava UP-TO-DATE
+    :buildSrc:compileGroovy
+    :buildSrc:processResources UP-TO-DATE
+    :buildSrc:classes
+    :buildSrc:jar
+    :buildSrc:assemble
+    :buildSrc:compileTestJava UP-TO-DATE
+    :buildSrc:compileTestGroovy UP-TO-DATE
+    :buildSrc:processTestResources UP-TO-DATE
+    :buildSrc:testClasses UP-TO-DATE
+    :buildSrc:test UP-TO-DATE
+    :buildSrc:check UP-TO-DATE
+    :buildSrc:build
+    :testComputedVersion
+    Current Branch / Version: refs/remotes/origin/master / 2 (2.0.0.0)
+    refs/remotes/origin/1.next -> 1.10 (expected: 1.10)
+    refs/remotes/origin/master -> 2 (expected: 2)
+    refs/remotes/origin/1.8.next -> 1.8.3 (expected: 1.8.3)
+    refs/remotes/origin/1.9.next -> 1.9 (expected: 1.9)
+    refs/remotes/origin/1.8.0.next -> 1.8.0.4 (expected: 1.8.0.4)
+    refs/remotes/origin/1.8.1.next -> 1.8.1.2 (expected: 1.8.1.2)
+    
+    BUILD SUCCESSFUL
+    
+    Total time: 7.519 secs
+
