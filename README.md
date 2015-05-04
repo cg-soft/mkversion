@@ -92,7 +92,7 @@ Note that bumping the major version requires changing the constant `MASTER_VERSI
 Given the current branch, and the set of branch and tag names known in git, we compute the project version as follows:
 
 * First, we determine the "target branch" of the current branch:
-  * Collect all possible remote branches matching our rules for a target branch (they must be of the form <n>[.<n>]*.next or master)
+  * Collect all possible remote branches matching our rules for a target branch (they must be of the form N(.N)*.next or master)
   * Determine the upstream branch of the current branch, if possible.
   * If the upstream branch is in the candidate collection, good, that is out target branch.
   * If not, we compute the "commit distance" between the current or upstream branch and all the possible target branches. This is done by counting the number of commits in the current branch which are not in the candidate target branch. Ties are resolved in favor of the oldest branch. Branch age is sorted by the tuple sort (1.0.next < 1.0.0.next etc...), and master is always considered the oldest of them all.
