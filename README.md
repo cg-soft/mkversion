@@ -91,8 +91,14 @@ Note that bumping the major version requires changing the constant `MASTER_VERSI
 
 Given the current branch, and the set of branch and tag names known in git, we compute the project version as follows:
 
-* The version string will start with the explicit components mentioned in the current branch.
-* The ".next" suffix will be replaced by a number one higher than the largest number used as the explicit portion of the version in any other branch or tag. If there is no other branch or tag with the same prefix as the current branch, then the suffix will be zero.
+* First, we determine the "target branch" of the current branch:
+  * Collect all possible remote branches matching our rules for a target branch (they must be of the form <n>[.<n>]*.next or master)
+  * Determine the upstream branch of the current branch, if possible.
+  * If the upstream branch is in the candidate collection, good, that is out target branch.
+  * If not, we compute the "commit distance" between the current or upstream branch and all the possible target branches. This is done by counting the number of commits in the current branch which are not in the candidate target branch. Ties are resolved in favor of the oldest branch. Branch age is sorted by the tuple sort (1.0.next < 1.0.0.next etc...), and master is always considered the oldest of them all.
+  * The candidate branch with the shortest commit distance to the current branch is our target branch.
+* The version string will start with the explicit components mentioned in the target branch.
+* The ".next" suffix will be replaced by a number one higher than the largest number used as the explicit portion of the version in any other branch or tag. If there is no other branch or tag with the same prefix as the target branch, then the suffix will be zero.
 * The treatment of the "master" branch can be arbitrary. A constant in the script can be set to map the "master" branch to a string which conforms to the conventions above - or you can choose to not use master for any release builds.
 
 ## Testing
