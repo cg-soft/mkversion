@@ -5,6 +5,11 @@ ext.computedShortVersion = computedVersion.getVersion(rootDir.toString())
 ext.computedLongVersion  = computedVersion.padVersion(computedShortVersion)
 ext.computedTargetBranch = computedVersion.activeBranch
 
+// Note that if, for whatever reason, you need to make an exception and *not*
+// use a computed version, you can easily override or replace the code.
+// At least by doing so you are documenting the fact that you are violating your
+// own conventions, for whatever reasons.
+
 def computedVersionTest() {
     // printing this here allows the tracking branch behavior to be
     // tested manually.
